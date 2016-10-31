@@ -63,8 +63,8 @@ public class MapActivity extends AppCompatActivity implements
 //           Random r = new Random();
         String filePath = "/sdcard/Pictures/img2414.JPG";
         File file = new File(filePath);
-            double lat = 0;//(290000 + r.nextInt(30000)) / 10000.0D;
-            double lng = 0;//(1120000 + r.nextInt(30000)) / 10000.0D;
+            double lat = 0 ; //(290000 + r.nextInt(30000)) / 10000.0D;
+            double lng = 0 ;//(1120000 + r.nextInt(30000)) / 10000.0D;
             try {
                 lat = ImageInfo.getImgLatitude(file);
                 lng = ImageInfo.getImgLongitude(file);

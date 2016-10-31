@@ -36,26 +36,26 @@ public class ImageInfo {
     /**
      * 获取经度
      */
-    public static double getImgLongitude(File file)throws Exception{
+    public static double getImgLongitude(File file) throws Exception {
         printImageGPSInfo(file);
         return imgLongitude;
     }
 
     /**
-     *读取照片里面的信息
+     * 读取照片里面的信息
      */
-    public static void printImageGPSInfo(File file) throws ImageProcessingException,Exception{
+    public static void printImageGPSInfo(File file) throws ImageProcessingException, Exception {
         Metadata metadata = ImageMetadataReader.readMetadata(file);
-        for (Directory directory : metadata.getDirectories()){
-            for (Tag tag : directory.getTags()){
+        for (Directory directory : metadata.getDirectories()) {
+            for (Tag tag : directory.getTags()) {
                 String tagName = tag.getTagName();//标签名
                 String desc = tag.getDescription();//标签信息
-                if (tagName.equals("GPS Latitude")){
-                    imgLatitude = StrToDou(desc);
-                    System.err.print("纬度："+ imgLatitude);
-                }else if (tagName.equals("GPS Longitude")){
-                    imgLongitude = StrToDou(desc);
-                    System.err.print("经度："+ imgLongitude);
+                if (tagName.equals("GPS Latitude")) {
+                    imgLatitude = getRightAll(desc,4);
+                    System.err.print("纬度：" + imgLatitude);
+                } else if (tagName.equals("GPS Longitude")) {
+                    imgLongitude = getRightAll(desc,3);
+                    System.err.print("经度：" + imgLongitude);
                 }
             }
         }
@@ -64,14 +64,29 @@ public class ImageInfo {
     /**
      * 将经纬度度分秒格式String转换为度double格式
      */
-    private static double StrToDou(String desc){
-        Double du = Double.parseDouble(desc.substring(0,desc.indexOf("°")).trim());
-        Double fen = Double.parseDouble(desc.substring(desc.indexOf("°")+1,desc.indexOf("'")).trim());
-        Double miao = Double.parseDouble(desc.substring(desc.indexOf("'")+1,desc.indexOf("\"")).trim());
-        Double duDou = du + fen / 60 + miao / 60 / 60 ;
+    private static double StrToDou(String desc) {
+        Double du = Double.parseDouble(desc.substring(0, desc.indexOf("°")).trim());
+        Double fen = Double.parseDouble(desc.substring(desc.indexOf("°") + 1, desc.indexOf("'")).trim());
+        Double miao = Double.parseDouble(desc.substring(desc.indexOf("'") + 1, desc.indexOf("\"")).trim());
+        Double duDou = du + fen / 60 + miao / 60 / 60;
         DecimalFormat df = new DecimalFormat("#####0.000");
+
         format = df.format(duDou);
         return Double.valueOf(format);
+    }
+
+    private static double getRightAll(String desc, int num) {
+        Double du = Double.parseDouble(desc.substring(0, desc.indexOf("°")).trim());
+        Double fen = Double.parseDouble(desc.substring(desc.indexOf("°") + 1, desc.indexOf("'")).trim());
+        Double miao = Double.parseDouble(desc.substring(desc.indexOf("'") + 1, desc.indexOf("\"")).trim());
+        Double duDou = du + fen / 60 + miao / 60 / 60;
+        StringBuilder sb = new StringBuilder();
+        sb.append("#####0.");
+        for (int i = 0; i < num; i++) {
+            sb.append("0");
+        }
+        DecimalFormat df = new DecimalFormat(sb.toString());
+        return Double.valueOf(df.format(duDou));
     }
 
 }
