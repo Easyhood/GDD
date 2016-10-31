@@ -15,11 +15,11 @@ import com.houde.amapclusterlib.ClusterOverlay;
 import com.houde.amapclusterlib.IClusterItem;
 import com.houde.amapclusterlib.IconRes;
 import com.rgk.qiguan.gddemo.R;
-import com.rgk.qiguan.gddemo.bean.Images;
+import com.rgk.qiguan.gddemo.utils.ImageInfo;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class MapActivity extends AppCompatActivity implements
         AMap.OnMarkerClickListener,
@@ -59,15 +59,24 @@ public class MapActivity extends AppCompatActivity implements
 
     private void addMarkersToMap() {
         List<IClusterItem> clusterItems = new ArrayList<IClusterItem>();
-        for (int i = 0; i < Images.imageUrls.length; i++) {
-            Random r = new Random();
-            double lat = (290000 + r.nextInt(30000)) / 10000.0D;
-            double lng = (1120000 + r.nextInt(30000)) / 10000.0D;
+ //       for (int i = 0; i < Images.imageUrls.length; i++) {
+//           Random r = new Random();
+        String filePath = "/sdcard/Pictures/img2414.JPG";
+        File file = new File(filePath);
+            double lat = 0;//(290000 + r.nextInt(30000)) / 10000.0D;
+            double lng = 0;//(1120000 + r.nextInt(30000)) / 10000.0D;
+            try {
+                lat = ImageInfo.getImgLatitude(file);
+                lng = ImageInfo.getImgLongitude(file);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             LatLng latLng = new LatLng(lat, lng);
-            clusterItems.add(new ImgData(latLng,Images.imageUrls[i]));
+            clusterItems.add(new ImgData(latLng,file/*Images.imageUrls[i]*/));
             Log.e(TAG,"list" + clusterItems);
             clusterOverlay = new ClusterOverlay(mContext, aMap, dp2px(80), clusterItems, null);
-        }
+//        }
 
     }
 
@@ -78,9 +87,9 @@ public class MapActivity extends AppCompatActivity implements
 
     static class ImgData implements IClusterItem {
         LatLng latLng;
-        int imgStr;
+        File imgStr;
 
-        public ImgData(LatLng latLng, int imgStr) {
+        public ImgData(LatLng latLng, File imgStr) {
             this.latLng = latLng;
             this.imgStr = imgStr;
         }
