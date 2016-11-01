@@ -25,6 +25,8 @@ public class MapActivity extends AppCompatActivity implements
         AMap.OnMarkerClickListener,
         AMap.OnMapLoadedListener,
         AMap.OnCameraChangeListener {
+    double lat = 0 ;
+    double lng = 0 ;
 
     Context mContext;
     MapView mapView;
@@ -57,17 +59,17 @@ public class MapActivity extends AppCompatActivity implements
 
     private final String TAG = "ClusterMarkerActivity";
 
-    private void addMarkersToMap() {
+    public void addMarkersToMap() {
         List<IClusterItem> clusterItems = new ArrayList<IClusterItem>();
  //       for (int i = 0; i < Images.imageUrls.length; i++) {
 //           Random r = new Random();
         String filePath = "/sdcard/Pictures/img2414.JPG";
         File file = new File(filePath);
-            double lat = 0 ; //(290000 + r.nextInt(30000)) / 10000.0D;
-            double lng = 0 ;//(1120000 + r.nextInt(30000)) / 10000.0D;
+           // double lat = 0 ; //(290000 + r.nextInt(30000)) / 10000.0D;
+           // double lng = 0 ;//(1120000 + r.nextInt(30000)) / 10000.0D;
             try {
-                lat = ImageInfo.getImgLatitude(file);
-                lng = ImageInfo.getImgLongitude(file);
+                   lat = ImageInfo.getImgLatitude(file);
+                   lng = ImageInfo.getImgLongitude(file);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -126,7 +128,7 @@ public class MapActivity extends AppCompatActivity implements
 
     @Override
     public void onMapLoaded() {
-        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(29,112),8));
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat,lng),8));
     }
 
     @Override
