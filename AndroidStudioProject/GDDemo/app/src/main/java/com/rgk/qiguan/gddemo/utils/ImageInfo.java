@@ -51,10 +51,10 @@ public class ImageInfo {
                 String tagName = tag.getTagName();//标签名
                 String desc = tag.getDescription();//标签信息
                 if (tagName.equals("GPS Latitude")) {
-                    imgLatitude = getRightAll(desc,4);
+                    imgLatitude = StrToDou(desc);
                     System.err.print("纬度：" + imgLatitude);
                 } else if (tagName.equals("GPS Longitude")) {
-                    imgLongitude = getRightAll(desc,3);
+                    imgLongitude = StrToDou(desc);
                     System.err.print("经度：" + imgLongitude);
                 }
             }
@@ -69,10 +69,7 @@ public class ImageInfo {
         Double fen = Double.parseDouble(desc.substring(desc.indexOf("°") + 1, desc.indexOf("'")).trim());
         Double miao = Double.parseDouble(desc.substring(desc.indexOf("'") + 1, desc.indexOf("\"")).trim());
         Double duDou = du + fen / 60 + miao / 60 / 60;
-        DecimalFormat df = new DecimalFormat("#####0.000");
-
-        format = df.format(duDou);
-        return Double.valueOf(format);
+        return duDou;
     }
 
     private static double getRightAll(String desc, int num) {
