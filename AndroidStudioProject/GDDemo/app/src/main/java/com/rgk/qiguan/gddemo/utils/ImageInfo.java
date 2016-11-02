@@ -68,8 +68,8 @@ public class ImageInfo {
         Double du = Double.parseDouble(desc.substring(0, desc.indexOf("°")).trim());
         Double fen = Double.parseDouble(desc.substring(desc.indexOf("°") + 1, desc.indexOf("'")).trim());
         Double miao = Double.parseDouble(desc.substring(desc.indexOf("'") + 1, desc.indexOf("\"")).trim());
-        Double duDou = du + fen / 60 + miao / 60 / 60;
-        return duDou;
+        Double duDouble = du + fen / 60 + miao / 60 / 60;
+        return duDouble;
     }
 
     private static double getRightAll(String desc, int num) {

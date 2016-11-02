@@ -483,17 +483,17 @@ public class ClusterOverlay {
         if (iconType == IconRes.TYPE_RES_ICON) {
             Picasso.with(mContext)
                     .load(cluster.getIconRes().iconRes)
-                    .resize(120, 120)
+                    .resize(160, 160)
                     .into(iconGeneratorMap.get(cluster.getMarker()));
         } else if (iconType == IconRes.TYPE_LOCAL_ICON) {
             Picasso.with(mContext)
                     .load(cluster.getIconRes().iconFile)
-                    .resize(120, 120)
+                    .resize(160, 160)
                     .into(iconGeneratorMap.get(cluster.getMarker()));
         } else if (iconType == IconRes.TYPE_REMOTE_ICON) {
             Picasso.with(mContext)
                     .load(cluster.getIconRes().iconRemote)
-                    .resize(120, 120)
+                    .resize(160, 160)
                     .into(iconGeneratorMap.get(cluster.getMarker()));
         }
     }

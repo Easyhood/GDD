@@ -108,7 +108,7 @@ public class MapActivity extends AppCompatActivity implements
         }
 
             Log.e(TAG,"list" + clusterItems);
-            clusterOverlay = new ClusterOverlay(mContext, aMap, dp2px(80), clusterItems, null);
+            clusterOverlay = new ClusterOverlay(mContext, aMap, dp2px(65), clusterItems, null);
 
     }
 
