@@ -270,6 +270,7 @@ public class BitmapUtils {
         return bitmap;
     }
 
+    //原来是画圆的逻辑，现在根据需求画方
     public static Bitmap toRoundBitmap(Bitmap bitmap) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
@@ -315,10 +316,17 @@ public class BitmapUtils {
         paint.setColor(color);
 
         // 以下有两种方法画圆,drawRounRect和drawCircle
-         canvas.drawRoundRect(rectF, roundPx, roundPx, paint);// 画圆角矩形，第一个参数为图形显示区域，第二个参数和第三个参数分别是水平圆角半径和垂直圆角半径。
-        //canvas.drawCircle(roundPx, roundPx, roundPx, paint);
+        //  canvas.drawRoundRect(rectF, roundPx, roundPx, paint);// 画圆角矩形，第一个参数为图形显示区域，第二个参数和第三个参数分别是水平圆角半径和垂直圆角半径。
+        float rx = roundPx / 5;
+        float ry = roundPx / 5;
+        //canvas.drawRoundRect(rectF,rx,ry,paint);
+       // canvas.drawCircle(roundPx, roundPx, roundPx, paint);
         //画方
-        //canvas.drawRect(roundPx,roundPx,roundPx,roundPx,paint);
+        float useLeft = (float) (left * 0.8);
+        float useTop = (float) (top * 0.8);
+        float useRight = (float) (right * 0.8);
+        float useBottom = (float) (bottom * 0.8);
+        canvas.drawRoundRect(useLeft,useTop,useRight,useBottom,rx,ry,paint);
 
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));// 设置两张图片相交时的模式,参考http://trylovecatch.iteye.com/blog/1189452
         canvas.drawBitmap(bitmap, src, dst, paint); //以Mode.SRC_IN模式合并bitmap和已经draw了的Circle
